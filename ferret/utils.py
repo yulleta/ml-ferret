@@ -74,15 +74,18 @@ class StreamToLogger(object):
         temp_linebuf = self.linebuf + buf
         self.linebuf = ''
         for line in temp_linebuf.splitlines(True):
-            # From the io.TextIOWrapper docs:
-            #   On output, if newline is None, any '\n' characters written
-            #   are translated to the system default line separator.
-            # By default sys.stdout.write() expects '\n' newlines and then
-            # translates them so this is still cross platform.
             if line[-1] == '\n':
-                self.logger.log(self.log_level, line.rstrip())
+                try:
+                    # Try logging the line
+                    self.logger.log(self.log_level, line.rstrip())
+                except UnicodeEncodeError:
+                    # If there's an encoding error, encode the line as UTF-8 and then decode it
+                    # This ensures that the line is in a format that the logger can handle
+                    safe_line = line.encode('utf-8', errors='replace').decode('utf-8')
+                    self.logger.log(self.log_level, safe_line.rstrip())
             else:
                 self.linebuf += line
+
 
     def flush(self):
         if self.linebuf != '':

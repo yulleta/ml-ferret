@@ -3,7 +3,7 @@ A model worker executes the model.
 Usage:
 
 CUDA_VISIBLE_DEVICES=0 python -m ferret.serve.model_worker --host 0.0.0.0 --controller http://localhost:10000 --port 40000 \
-    --worker http://localhost:40000 --model-path checkpoints/xxx \
+    --worker http://localhost:40000 --model-path checkpoints/ferret-7b-v1-3 \
     --multi-modal --add_region_feature
 
 """
