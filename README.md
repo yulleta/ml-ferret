@@ -1,3 +1,20 @@
+
+python -m ferret.model.apply_delta --base vicuna-7b-v1.5/snapshots/de56c35b1763eaae20f4d60efd64af0a9091ebe5 --target ./checkpoints/ferret-7b-v1-3 --delta ferret-7b-delta
+
+=================================
+
+python -m ferret.serve.controller --host 0.0.0.0 --port 10000
+
+python -m ferret.serve.gradio_web_server --controller http://localhost:10000 --add_region_feature
+
+(GPU 있으면)
+CUDA_VISIBLE_DEVICES=0  python -m ferret.serve.model_worker --host 0.0.0.0 --controller http://localhost:10000 --port 40000 --worker http://localhost:40000 --model-path ./checkpoints/ferret-7b-v1-3 --add_region_feature
+
+(GPU 없으면)
+python -m ferret.serve.model_worker --host 0.0.0.0 --controller http://localhost:10000 --port 40000 --worker http://localhost:40000 --model-path ./checkpoints/ferret-7b-v1-3 --add_region_feature
+
+https://llava-vl.github.io/
+
 <!-- # Project Name
 
 This software project accompanies the research paper, [Paper title](https://arxiv.org).
