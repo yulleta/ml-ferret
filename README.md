@@ -2,6 +2,10 @@
 python -m ferret.model.apply_delta --base vicuna-7b-v1.5/snapshots/de56c35b1763eaae20f4d60efd64af0a9091ebe5 --target ./checkpoints/ferret-7b-v1-3 --delta ferret-7b-delta
 
 =================================
+(ferret-7b-v1-3 download link)
+https://drive.google.com/drive/folders/1PCctIakcIGoBaYy-uQLanCkxz-zKkdsc?usp=drive_link
+
+================================
 
 python -m ferret.serve.controller --host 0.0.0.0 --port 10000
 
